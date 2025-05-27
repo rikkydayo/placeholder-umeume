@@ -30,7 +30,7 @@ except Exception as e:
 # セッション設定
 app.permanent_session_lifetime = timedelta(minutes=90)
 app.config.update(
-    SESSION_COOKIE_SECURE=True,
+    SESSION_COOKIE_SECURE=False,
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE='Lax',
     WTF_CSRF_ENABLED=True

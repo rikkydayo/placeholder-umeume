@@ -1,11 +1,13 @@
 body { font-family: Arial, sans-serif; margin: 20px; }
 .container { max-width: 600px; margin: auto; }
 .input-field, .select-field { width: 100%; padding: 10px; margin: 10px 0; }
-.submit-btn, .copy-btn { padding: 10px 20px; margin: 5px; cursor: pointer; }
+.submit-btn, .copy-btn, .clear-btn { padding: 10px 20px; margin: 5px; cursor: pointer; }
 .submit-btn { background: #4CAF50; color: white; border: none; }
 .submit-btn:hover { background: #45a049; }
 .copy-btn { background: #008CBA; color: white; border: none; }
 .copy-btn:hover { background: #007399; }
+.clear-btn { background: #6c757d; }
+.clear-btn:hover { background: #5a6268; }
 .result { margin-top: 20px; padding: 10px; border: 1px solid #ddd; }
 .help { margin-top: 20px; padding: 10px; background: #f9f9f9; border-radius: 5px; }
 .error { color: red; }
