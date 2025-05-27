@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>ログイン - SQLプレースホルダアプリ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>ログイン</h1>
+        <p>社内ユーザーのみ利用可能です。</p>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <label for="username">{{ form.username.label }}</label><br>
+            {{ form.username(class="input-field", required=True) }}<br>
+            <label for="password">{{ form.password.label }}</label><br>
+            {{ form.password(class="input-field", required=True) }}<br><br>
+            {{ form.submit(class="submit-btn") }}
+        </form>
+    </div>
+</body>
+</html>

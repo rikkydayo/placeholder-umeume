@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>SQLプレースホルダアプリ</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>SQLプレースホルダアプリ</h1>
+        <p>SQLテンプレートとパラメータを入力して、完成したクエリを生成します。</p>
+        <p><a href="{{ url_for('logout') }}" class="logout-btn">ログアウト</a></p>
+        <form method="POST" id="inputForm">
+            {{ form.hidden_tag() }}
+            <label for="template">{{ form.template.label }}</label><br>
+            {{ form.template(class="input-field", placeholder="例: SELECT * FROM table WHERE id = ? AND date = ? AND name = ? AND amount = ? AND created_at = ? AND active = ? AND value = ?") }}<br>
+            <label for="params">{{ form.params.label }}</label><br>
+            {{ form.params(class="input-field", placeholder="例: 599(Integer),2025-02-01(LocalDate),Alice(String),99.50(BigDecimal),2025-02-01T10:00:00(LocalDateTime),true(Boolean),NULL(NULL)") }}<br><br>
+            {{ form.submit(class="submit-btn") }}
+            <button type="button" class="clear-btn">クリア</button>
+        </form>
+
+        {% if result %}
+        <div id="result-container" {% if not result %}style="display: none;"{% endif %}>
+            <h3>結果:</h3>
+            <p class="result-text">{{ result }}</p>
+            <button class="copy-btn">結果をコピー</button>
+        </div>
+        {% endif %}
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="{{ category }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div class="help">
+            <h3>使い方</h3>
+            <p><strong>SQLテンプレート</strong>: プレースホルダとして ? を使います。</p>
+            <p><strong>パラメータ</strong>: 値(型) の形式でカンマ区切り。例: 599(Integer),2025-02-01(LocalDate),Alice(String),99.50(BigDecimal),2025-02-01T10:00:00(LocalDateTime),true(Boolean),NULL(NULL)。</p>
+            <p><strong>型</strong>: Integer/BigDecimal（クォートなし）、LocalDate/String/LocalDateTime（シングルクォート付き）、Boolean（TRUE/FALSE）、NULL（NULL）。</p>
+            <p><strong>例</strong>:<br>
+               テンプレート: <code>SELECT * FROM table WHERE id = ? AND date = ? AND name = ? AND amount = ? AND created_at = ? AND active = ? AND value = ?</code><br>
+               パラメータ: <code>599(Integer),2025-02-01(LocalDate),Alice(String),99.50(BigDecimal),2025-02-01T10:00:00(LocalDateTime),true(Boolean),NULL(NULL)</code><br>
+               結果: <code>SELECT * FROM table WHERE id = 599 AND date = '2025-02-01' AND name = 'Alice' AND amount = 99.50 AND created_at = '2025-02-01 10:00:00' AND active = TRUE AND value = NULL</code></p>
+        </div>
+    </div>
+</body>
+</html>
